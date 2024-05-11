@@ -23,4 +23,5 @@ export type TUpdateContact = {
   email?: string;
   phoneNumber?: string;
   address?: string;
+  photoUrl?: string;
 };

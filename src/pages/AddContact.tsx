@@ -39,19 +39,27 @@ const AddContact = () => {
       phoneNumber: { value: string };
       email: { value: string };
       address: { value: string };
+      photoUrl: { value: string };
     };
 
     const name = target?.name.value as string;
     const phoneNumber = target.phoneNumber.value;
     const email = target.email.value;
     const address = target.address.value;
+    const photoUrl = target.photoUrl.value;
     const form = e.currentTarget;
     const textData = {
       name,
       phoneNumber,
       email,
       address,
+      photoUrl,
     };
+
+    if (!File && !photoUrl) {
+      alert("photo is requied");
+      return;
+    }
 
     formData.append("file", File as File);
     formData.append("data", JSON.stringify(textData));
@@ -91,19 +99,26 @@ const AddContact = () => {
         >
           <div className="col-span-6 flex justify-between items-center bg-gray-200 rounded-lg p-2">
             <div>
-              <div className="mb-2  flex">
-                <Label
-                  htmlFor="file-upload-helper-text"
-                  value="Upload file :"
-                />
-                <h1 className="text-red-600 text-xl">*</h1>
+              <div>
+                <div className="mb-2  flex">
+                  <Label
+                    htmlFor="file-upload-helper-text"
+                    value="Upload file(only for Local host) :"
+                  />
+                  <h1 className="text-red-600 text-xl">*</h1>
+                </div>
+                <FileInput typeof="file" id="file" onChange={imageshower} />
               </div>
-              <FileInput
-                typeof="file"
-                id="file"
-                onChange={imageshower}
-                required
-              />
+              <div className="mt-2">
+                <div className="mb-2  flex">
+                  <Label
+                    htmlFor="file-upload-helper-text"
+                    value="Profie photo URL :"
+                  />
+                  <h1 className="text-red-600 text-xl">*</h1>
+                </div>
+                <TextInput type="text" id="photoUrl" />
+              </div>
             </div>
             <div className="col-span-4">
               <img

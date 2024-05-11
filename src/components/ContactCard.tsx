@@ -1,7 +1,7 @@
 import { TContact } from "../types/dataTypes";
 import { Card } from "flowbite-react";
 import UpdateModal from "./UpdateModal";
-import { Menu, MenuButton, MenuItem } from "@szhsin/react-menu";
+import { Menu, MenuItem } from "@szhsin/react-menu";
 import {
   useChangeFavouriteStatusMutation,
   useDeleteContactMutation,
@@ -42,11 +42,7 @@ const ContactCard = ({ contact }: { contact: TContact }) => {
           <div>
             <Menu
               className="space-y-2 min-w-28 "
-              menuButton={
-                <MenuButton className="p-1 bg-sky-400 rounded-lg">
-                  Menu
-                </MenuButton>
-              }
+              menuButton={<h1 className="p-1 bg-sky-400 rounded-lg">Menu</h1>}
             >
               <MenuItem>
                 <button className="bg-sky-200 w-full rounded-lg my-1 p-2">
