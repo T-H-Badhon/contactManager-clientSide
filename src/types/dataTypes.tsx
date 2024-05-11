@@ -1,3 +1,5 @@
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+
 export type TContact = {
   _id: string;
   name: string;
@@ -8,9 +10,9 @@ export type TContact = {
   isFavourite: boolean;
 };
 
-export type TError = {
-  statusCode: number;
+export type TError = FetchBaseQueryError & {
   data: {
+    success: boolean;
     message: string;
     errorMessage: string;
   };

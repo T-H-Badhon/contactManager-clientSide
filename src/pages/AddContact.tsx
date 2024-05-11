@@ -1,8 +1,10 @@
 import { Button, FileInput, Label, TextInput } from "flowbite-react";
-import React, { FormEvent, useState } from "react";
+import React, { useState } from "react";
 import logo from "../assets/person-dummy.jpg";
 import { useAddContactMutation } from "../redux/api/contactApi/contactApi";
-import AddContactToast from "../components/toasts/AddContactToast";
+import FailedToast from "../components/toasts/FailedToast";
+import { TError } from "../types/dataTypes";
+import SuccessToast from "../components/toasts/SuccessToast";
 
 const AddContact = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -11,7 +13,7 @@ const AddContact = () => {
 
   const formData = new FormData();
 
-  const [AddContact] = useAddContactMutation();
+  const [AddContact, { data, error }] = useAddContactMutation();
 
   const imageshower = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -28,9 +30,10 @@ const AddContact = () => {
     }
   };
 
-  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    console.log(e);
     const target = e.target as typeof e.target & {
       name: { value: string };
       phoneNumber: { value: string };
@@ -38,11 +41,11 @@ const AddContact = () => {
       address: { value: string };
     };
 
-    const name = target.name.value;
+    const name = target?.name.value as string;
     const phoneNumber = target.phoneNumber.value;
     const email = target.email.value;
     const address = target.address.value;
-
+    const form = e.currentTarget;
     const textData = {
       name,
       phoneNumber,
@@ -55,14 +58,20 @@ const AddContact = () => {
 
     const res = await AddContact(formData);
 
-    console.log(res);
+    if (res?.data?.success) {
+      form.reset();
+      setImageSrc("");
+    }
   };
 
   return (
     <div className="container mx-auto lg:px-28 lg:mt-15 md:mt-10 mt-5">
-      {/* {data?.success == true ? (
-        <AddContactToast message={data.message} key={1}></AddContactToast>
-      ) : null} */}
+      {data?.success === true ? (
+        <SuccessToast message={data.message} key={1}></SuccessToast>
+      ) : null}
+      {error ? (
+        <FailedToast error={error as TError} key={2}></FailedToast>
+      ) : null}
       <h1 className="text-xl md:text-2xl lg:text-3xl text-center font-bold">
         Add Contact
       </h1>
