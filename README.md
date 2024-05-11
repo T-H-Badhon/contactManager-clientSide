@@ -1,30 +1,42 @@
-# React + TypeScript + Vite
+<h1>Project Name: Contact Manager (client)</h1>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<h1>How to run:</h1>
 
-Currently, two official plugins are available:
+after cloning this in your local computer type npm install --force
+And After that type npm run dev to run this project in your local computer.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<h1>Technologies:</h1>
 
-## Expanding the ESLint configuration
+- _**Languages**_
+  - HTML
+  - CSS (TailWind)
+  - JavaScript
+  - TypeScript
+- _**Tech-Stack:**_
+  - ReactJs (Flowbit-React Library)
+  - NodeJs
+  - Redux
+- _**Build Tools**_
+  - Vite
+  - Fronted Hosting [Vercel](https://vercel.com/dashboard)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Explanation Of All pages Features :
 
-- Configure the top-level `parserOptions` property like this:
+1. **Navbar**
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+   - A responsive navbar with two buttons.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+2. **Add Contacts**
+   - A responsive form to take inputs from users.
+   - Form is able to take File inputs.
+   - Loading and Toast also included.
+3. **All Contacts**
+   - Shows all contacts in cards which provides all the informations asked in task.
+   - Search feature also included to search contacts.
+4. **Update Modal**
+   - A form is applied in the modal to take data from users.
+   - Form is pre-filled by contact's preset informations.
+   - Loading and Toast also included.
+5. **Card**
+   - Card contains name,email, phone, address and picture of the contact.
+   - A menu button is applied to create a menu with options update, mark as favoutie/ mark unfavourite and delete
