@@ -7,3 +7,11 @@ export type TContact = {
   ProfilePhoto: string;
   isFavourite: boolean;
 };
+
+export type TError = {
+  statusCode: number;
+  data: {
+    message: string;
+    errorMessage: string;
+  };
+};
