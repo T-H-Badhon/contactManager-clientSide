@@ -5,10 +5,11 @@ import { useUpdateContactMutation } from "../redux/api/contactApi/contactApi";
 import { TContact, TError, TUpdateContact } from "../types/dataTypes";
 import SuccessToast from "./toasts/SuccessToast";
 import FailedToast from "./toasts/FailedToast";
+import { BounceLoader } from "react-spinners";
 
 const UpdateModal = ({ contact }: { contact: TContact }) => {
   const [openModal, setOpenModal] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [loading, setLoading] = useState(false);
   const [File, setFile] = useState<File | null>(null);
   const [imageSrc, setImageSrc] = useState<string | null>(null);
 
@@ -66,14 +67,23 @@ const UpdateModal = ({ contact }: { contact: TContact }) => {
       id: contact._id,
       formData,
     };
+    setLoading(true);
+    const res = await UpdateContact(updateData);
 
-    UpdateContact(updateData);
+    if (res) {
+      setLoading(false);
+    }
   };
 
   return (
     <>
       <button onClick={() => setOpenModal(true)}>Update</button>
       <Modal dismissible show={openModal} onClose={() => setOpenModal(false)}>
+        {loading ? (
+          <h1>
+            <BounceLoader className="mx-auto" color="#36d7b7" />
+          </h1>
+        ) : null}
         <Modal.Body>
           <h1 className="text-xl md:text-2xl lg:text-3xl text-center font-bold mt-5">
             Update contact
@@ -155,7 +165,7 @@ const UpdateModal = ({ contact }: { contact: TContact }) => {
 
               <div className="flex justify-around  col-span-6">
                 <Button type="submit">Submit</Button>
-                <Button onClick={() => setOpenModal(false)}>cancel</Button>
+                <Button onClick={() => setOpenModal(false)}>Close</Button>
               </div>
             </form>
           </div>

@@ -8,8 +8,7 @@ import {
 } from "../redux/api/contactApi/contactApi";
 
 const ContactCard = ({ contact }: { contact: TContact }) => {
-  const [ChangeFavouriteStatus, { data, error }] =
-    useChangeFavouriteStatusMutation();
+  const [ChangeFavouriteStatus] = useChangeFavouriteStatusMutation();
 
   const [DeleteContact] = useDeleteContactMutation();
 
@@ -21,6 +20,7 @@ const ContactCard = ({ contact }: { contact: TContact }) => {
       id: contact._id,
       statusData,
     };
+
     ChangeFavouriteStatus(arg);
   };
 
@@ -93,16 +93,21 @@ const ContactCard = ({ contact }: { contact: TContact }) => {
               <div className="col-span-3">: {contact.name}</div>
             </div>
             <div className="grid grid-cols-4 gap-3">
+              <div className="col-span-1">Email</div>
+              <div className="col-span-3">
+                :{" "}
+                {contact?.email ? (
+                  contact.email
+                ) : (
+                  <span className="text-red-600">Not added</span>
+                )}
+              </div>
+            </div>
+            <div className="grid grid-cols-4 gap-3">
               <div className="col-span-1">Phone</div>
               <div className="col-span-3">: {contact.phoneNumber}</div>
             </div>
 
-            <div className="grid grid-cols-4 gap-3">
-              <div className="col-span-1">Email</div>
-              <div className="col-span-3">
-                : {contact?.email || "not added"}
-              </div>
-            </div>
             <div className="grid grid-cols-4 gap-3">
               <div className="col-span-1">Address</div>
               <div className="col-span-3">: {contact.address}</div>

@@ -1,5 +1,3 @@
-import React from "react";
-
 const NotFound = () => {
   return (
     <div className="h-screen bg-zinc-300 mb-10 rounded-xl flex justify-center items-center">

@@ -7,9 +7,9 @@ import { useState } from "react";
 
 const AllContact = () => {
   const [searchTerm, setSearchTerm] = useState({ searchTerm: "" });
+
   const { data: contacts } = useGetContactsQuery(searchTerm);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const searcher = (e: React.FormEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value;
     setSearchTerm({ searchTerm: newValue });
@@ -25,7 +25,8 @@ const AllContact = () => {
           placeholder="search"
         />
       </h1>
-      <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-2 md:mt-10 mt-5 mx-auto">
+
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-2 md:mt-10 mt-5 mx-auto">
         {contacts?.data.length ? (
           contacts.data.map((contact: TContact) => (
             <ContactCard contact={contact} key={contact._id}></ContactCard>

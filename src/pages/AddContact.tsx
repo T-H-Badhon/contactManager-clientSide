@@ -5,11 +5,12 @@ import { useAddContactMutation } from "../redux/api/contactApi/contactApi";
 import FailedToast from "../components/toasts/FailedToast";
 import { TError } from "../types/dataTypes";
 import SuccessToast from "../components/toasts/SuccessToast";
+import { BounceLoader } from "react-spinners";
 
 const AddContact = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [File, setFile] = useState<File | null>(null);
   const [imageSrc, setImageSrc] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const formData = new FormData();
 
@@ -54,87 +55,115 @@ const AddContact = () => {
 
     formData.append("file", File as File);
     formData.append("data", JSON.stringify(textData));
-
+    setLoading(true);
     const res = await AddContact(formData);
 
     if (res?.data?.success) {
+      setLoading(false);
       form.reset();
       setImageSrc("");
+    } else {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="container mx-auto lg:px-28 lg:mt-15 md:mt-10 mt-5">
-      {data?.success === true ? (
-        <SuccessToast message={data.message} key={1}></SuccessToast>
+    <>
+      {loading ? (
+        <h1>
+          <BounceLoader className="mx-auto" color="#36d7b7" />
+        </h1>
       ) : null}
-      {error ? (
-        <FailedToast error={error as TError} key={2}></FailedToast>
-      ) : null}
-      <h1 className="text-xl md:text-2xl lg:text-3xl text-center font-bold">
-        Add Contact
-      </h1>
-      <form
-        onSubmit={onSubmit}
-        className="grid grid-cols-6 gap-4 mx-auto max-w-2xl shadow-lg rounded-xl p-2"
-      >
-        <div className="col-span-6 flex justify-between items-center bg-gray-200 rounded-lg p-2">
-          <div>
+      <div className="container mx-auto lg:px-28 lg:mt-15 md:mt-10 mt-5">
+        {data?.success === true ? (
+          <SuccessToast message={data.message} key={1}></SuccessToast>
+        ) : null}
+        {error ? (
+          <FailedToast error={error as TError} key={2}></FailedToast>
+        ) : null}
+
+        <h1 className="text-xl md:text-2xl lg:text-3xl text-center font-bold">
+          Add Contact
+        </h1>
+        <form
+          onSubmit={onSubmit}
+          className="grid grid-cols-6 gap-4 mx-auto max-w-2xl shadow-lg rounded-xl p-2"
+        >
+          <div className="col-span-6 flex justify-between items-center bg-gray-200 rounded-lg p-2">
             <div>
-              <Label htmlFor="file-upload-helper-text" value="Upload file: " />
+              <div className="mb-2  flex">
+                <Label
+                  htmlFor="file-upload-helper-text"
+                  value="Upload file :"
+                />
+                <h1 className="text-red-600 text-xl">*</h1>
+              </div>
+              <FileInput
+                typeof="file"
+                id="file"
+                onChange={imageshower}
+                required
+              />
             </div>
-            <FileInput
-              typeof="file"
-              id="file"
-              onChange={imageshower}
+            <div className="col-span-4">
+              <img
+                src={imageSrc || logo}
+                alt="Selected"
+                className="w-40 h-40"
+              />
+            </div>
+          </div>
+          <div className="md:col-span-3 col-span-6">
+            <div className="mb-2  flex">
+              <Label htmlFor="name" value="Contact name :" />
+              <h1 className="text-red-600 text-xl">*</h1>
+            </div>
+            <TextInput
+              id="name"
+              type="text"
+              placeholder="Contact name"
               required
             />
           </div>
-          <div className="col-span-4">
-            <img src={imageSrc || logo} alt="Selected" className="w-40 h-40" />
+          <div className="md:col-span-3 col-span-6">
+            <div className="mb-2  flex">
+              <Label htmlFor="phoneNumber" value="Contact No. :" />
+              <h1 className="text-red-600 text-xl">*</h1>
+            </div>
+            <TextInput
+              id="phoneNumber"
+              type="text"
+              placeholder="017XXXXXXXX"
+              required
+            />
           </div>
-        </div>
-        <div className="md:col-span-3 col-span-6">
-          <div className="mb-2  flex">
-            <Label htmlFor="name" value="Contact name :" />
-            <h1 className="text-red-600 text-xl">*</h1>
+          <div className="md:col-span-3 col-span-6">
+            <div className="mb-2 block">
+              <Label htmlFor="email" value="Email :" />
+            </div>
+            <TextInput
+              id="email"
+              type="email"
+              placeholder="example@gmail.com"
+            />
           </div>
-          <TextInput
-            id="name"
-            type="text"
-            placeholder="Contact name"
-            required
-          />
-        </div>
-        <div className="md:col-span-3 col-span-6">
-          <div className="mb-2  flex">
-            <Label htmlFor="phoneNumber" value="Contact No. :" />
-            <h1 className="text-red-600 text-xl">*</h1>
+          <div className="md:col-span-3 col-span-6">
+            <div className="mb-2  flex">
+              <Label htmlFor="address" value="Address :" />
+              <h1 className="text-red-600 text-xl">*</h1>
+            </div>
+            <TextInput
+              id="address"
+              type="text"
+              placeholder="address"
+              required
+            />
           </div>
-          <TextInput
-            id="phoneNumber"
-            type="text"
-            placeholder="017XXXXXXXX"
-            required
-          />
-        </div>
-        <div className="md:col-span-3 col-span-6">
-          <div className="mb-2 block">
-            <Label htmlFor="email" value="Email :" />
-          </div>
-          <TextInput id="email" type="email" placeholder="example@gmail.com" />
-        </div>
-        <div className="md:col-span-3 col-span-6">
-          <div className="mb-2  flex">
-            <Label htmlFor="address" value="Address :" />
-            <h1 className="text-red-600 text-xl">*</h1>
-          </div>
-          <TextInput id="address" type="text" placeholder="address" required />
-        </div>
 
-        <Button type="submit">Submit</Button>
-      </form>
-    </div>
+          <Button type="submit">Submit</Button>
+        </form>
+      </div>
+    </>
   );
 };
 

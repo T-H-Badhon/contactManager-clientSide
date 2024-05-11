@@ -2,7 +2,6 @@ import { Toast } from "flowbite-react";
 import { HiExclamation } from "react-icons/hi";
 import { TError } from "../../types/dataTypes";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const FailedToast = ({ error }: { error: TError }) => {
   console.log(error.data);
   return (
