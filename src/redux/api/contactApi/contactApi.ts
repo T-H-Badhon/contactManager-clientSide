@@ -8,6 +8,7 @@ const userApi = baseApi.injectEndpoints({
         method: "POST",
         body: contactData,
       }),
+      invalidatesTags: ["contacts"],
     }),
     getContacts: builder.query({
       query: (queries) => ({
@@ -15,13 +16,24 @@ const userApi = baseApi.injectEndpoints({
         method: "GET",
         params: queries,
       }),
+      providesTags: ["contacts"],
     }),
     updateContact: builder.mutation({
       query: (args) => {
         return {
           url: `contacts/update/${args.id}`,
           method: "PATCH",
-          body: args.contactData,
+          body: args.formData,
+        };
+      },
+      invalidatesTags: ["contacts"],
+    }),
+    changeFavouriteStatus: builder.mutation({
+      query: (args) => {
+        return {
+          url: `contacts/change-favourite-status/${args.id}`,
+          method: "PATCH",
+          body: args.statusData,
         };
       },
       invalidatesTags: ["contacts"],
@@ -41,4 +53,5 @@ export const {
   useGetContactsQuery,
   useUpdateContactMutation,
   useDeleteContactMutation,
+  useChangeFavouriteStatusMutation,
 } = userApi;

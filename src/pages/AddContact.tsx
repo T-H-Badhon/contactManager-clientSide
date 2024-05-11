@@ -33,7 +33,6 @@ const AddContact = () => {
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log(e);
     const target = e.target as typeof e.target & {
       name: { value: string };
       phoneNumber: { value: string };

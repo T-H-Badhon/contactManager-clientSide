@@ -17,3 +17,10 @@ export type TError = FetchBaseQueryError & {
     errorMessage: string;
   };
 };
+
+export type TUpdateContact = {
+  name?: string;
+  email?: string;
+  phoneNumber?: string;
+  address?: string;
+};
